@@ -1,4 +1,4 @@
-# bashrc 1.1.1 - 2012-01-12
+# bashrc 1.1.2 - 2012-01-12
 #  - iadnah :: iadnah.net :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
@@ -12,6 +12,9 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+
+
+export BASHRC_VERSION="1.1.2"
 
 # USER OPTIONS
 ################################################################################
@@ -38,13 +41,6 @@ U_FUNCS=1
 # Set to 0 to disable
 #
 U_ALIASES=1
-
-# Start gpg-agent
-# Uncomment and set to 1 to enable
-#
-# This is currently semi-broken
-#U_GPGAGENT=0
-
 
 # Enable lesspipe
 # This bit makes it so less can seamlessly/transparently open
@@ -93,9 +89,19 @@ U_ALIASES=1
 	# check the window size after each command and, if necessary,
 	# update the values of LINES and COLUMNS.
 	shopt -s checkwinsize
+
+
+	#Enables advanced pathname matching
+	shopt -s extglob
+
+	#Don't do completion when the prompt is empty
+	shopt -s no_empty_cmd_completion
+
+	#Look for command in the hashtable before checking the $PATH
+	shopt -s checkhash
+
 ################################################################################
 # END OF BASH OPTIONS
-
 
 # LESSPIPE - Open non-text input files with less
 ########################################################################
@@ -118,7 +124,7 @@ fi
 #
 # if [ $TERM == "tectia" ]; then
 # 	export FORCE_COLOR_DISABLE=9001
-#	export LANC="utf8"
+#	export LANG="utf8"
 #
 #	while [ 0 ]; do
 #		sleep($RANDOM}
@@ -126,6 +132,46 @@ fi
 #	done
 #
 #############################################################################
+
+# Define colors for usage in prompts. Note that these are escaped for usage
+# in the prompt and shouldn't be used elsewhere
+eBLACK='\[\e[0;30m\]'
+eBLUE='\[\e[0;34m\]'
+eGREEN='\[\e[0;32m\]'
+eCYAN='\[\e[0;36m\]'
+eRED='\[\e[0;31m\]'
+ePURPLE='\[\e[0;35m\]'
+eBROWN='\[\e[0;33m\]'
+eLIGHTGRAY='\[\e[0;37m\]'
+eDARKGRAY='\[\e[1;30m\]'
+eLIGHTBLUE='\[\e[1;34m\]'
+eLIGHTGREEN='\[\e[1;32m\]'
+eLIGHTCYAN='\[\e[1;36m\]'
+eLIGHTRED='\[\e[1;31m\]'
+eIGHTPURPLE='\[\e[1;35m\]'
+eELLOW='\[\e[1;33m\]'
+eHITE='\[\e[1;37m\]'
+eNC='\[\e[0m\]'
+
+# Define colors for generic usage
+BLACK='\e[0;30m'
+BLUE='\e[0;34m'
+GREEN='\e[0;32m'
+CYAN='\e[0;36m'
+RED='\e[0;31m'
+PURPLE='\e[0;35m'
+BROWN='\e[0;33m'
+LIGHTGRAY='\e[0;37m'
+DARKGRAY='\e[1;30m'
+LIGHTBLUE='\e[1;34m'
+LIGHTGREEN='\e[1;32m'
+LIGHTCYAN='\e[1;36m'
+LIGHTRED='\e[1;31m'
+LIGHTPURPLE='\e[1;35m'
+YELLOW='\e[1;33m'
+WHITE='\e[1;37m'
+NC='\e[0m'
+
 FORCE_COLOR_DISABLE=${FORCE_COLOR_DISABLE:-''}
 FORCE_COLOR_PROMPT=${FORCE_COLOR_PROM:-"yes"}
 
@@ -147,9 +193,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" == "yes" ]; then
-	PS1='\[\033[01;34m\]\t :: \w\n\[\033[01;32m\]\u\[\033[01;00m\]@\[\033[01;34m\]\h\[\033[01;00m\]\$ '
+	export PS1="\n[${eLIGHTGREEN}\t${eNC}] :: [${eLIGHTBLUE}\w${eNC}]\n${eLIGHTGREEN}\u${eWHITE}@${eLIGHTGREEN}\h${eWHITE} >${eNC} "
 else
-	PS1="\t :: \w\n\u@\h\$ "
+	export PS1="\n[\t] :: [\w]\n\u@\h\> "
 fi
 unset color_prompt force_color_prompt
 ####################################
@@ -161,9 +207,6 @@ unset color_prompt force_color_prompt
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -184,27 +227,6 @@ if [ "${U_BINS}" == "1" ]; then
 fi
 ################################################################################
 # END PERSONAL BINARIES
-
-
-# GPG-AGENT Start
-################################################################################
-function u_gpgagent_start()
-{
-	eval $(gpg-agent --daemon --write-env-file "${HOME}/.gpg-agent-info" --log-file "${HOME}/.gnupg/gpg-agent.log")
-}
-alias "start-gpg-agent"=u_gpgagent_start
-
-U_GPGAGENT=${U_GPGAGENT:-"0"}
-if [ "${U_GPGAGENT}" == "1" ]; then
-	u_gpgagent_start
-	if [ -e "${HOME}/.gpg-agent-info" ]; then
-		. ${HOME}/.gpg-agent-info
-		export GPG_AGENT_INFO
-	fi
-fi
-################################################################################
-# GPG-AGENT End
-
 
 U_ALIASES=${U_ALIASES:-"1"}
 #BREAK:aliases
@@ -244,5 +266,20 @@ if [ "${U_FUNCS}" == "1" ]; then
 	    . ~/.bash_functions
 	fi
 fi
+
+# PROGRAMMABLE COMPLETION
+if ! shopt -oq posix; then
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
+
+	if [ -f ~/.bash_completion ]; then
+		. ~/.bash_completion
+	fi
+fi
+
+
 
 
