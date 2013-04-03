@@ -8,8 +8,7 @@ spin ()
 }
 
 
-if [ -d ~/.bash_functions.d ]; then
-	for inc in ~/.bash_functions.d/*; do
-		. ${inc}
-	done
+if [ -d "${HOME}/.bash_functions.d" ]; then
+	. ${HOME}/.bash_functions.d/*
 fi
+
