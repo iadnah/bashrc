@@ -51,6 +51,9 @@ U_ALIASES=1
 #
 #ENABLE_LESSPIPE=0
 
+# Set up ssh and/or gpg agents (this is not complete)
+
+U_AGENTS=1
 
 # USER ENVIRONMENT
 ################################################################################
@@ -227,6 +230,15 @@ if [ "${U_BINS}" == "1" ]; then
 fi
 ################################################################################
 # END PERSONAL BINARIES
+
+U_AGENTS=${U_AGENTS:-"1"}
+if [ "${U_AGENTS}" == "1" ]; then
+	KEYCHAIN=$(which keychain)
+	if [ "$?" == "0" ]; then
+		${KEYCHAIN} --inherit local
+	fi
+fi
+
 
 U_ALIASES=${U_ALIASES:-"1"}
 #BREAK:aliases
