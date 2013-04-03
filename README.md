@@ -1,7 +1,7 @@
 bashrc
 ======
 
-My bashrc blunderings
+My customized and extensible bashrc setup.
 
 ### Installation
-Delete .bashrc in your home directory and replace it with bashrc.
+Open command prompt, cd into the bashrc folder, and run ./install.sh
