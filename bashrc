@@ -1,4 +1,4 @@
-# bashrc 1.1.2 - 2012-01-12
+# bashrc 1.1.2 - 2013-04-03
 #  - iadnah :: iadnah.net :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
