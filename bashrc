@@ -1,4 +1,4 @@
-# bashrc 1.1.2 - 2013-04-03
+# bashrc 1.1.3 - 2013-04-14
 #  - iadnah :: iadnah.net :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
@@ -13,8 +13,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+export BASHRC_VERSION="1.1.3"
 
-export BASHRC_VERSION="1.1.2"
 
 # USER OPTIONS
 ################################################################################
@@ -22,25 +22,42 @@ export BASHRC_VERSION="1.1.2"
 # variables are the default settings.
 ################################################################################
 
+# If U_PRECUSTOM is set to 1, the load ~/.bashrc.precustom before proceeding.
+# This allows users to set custom options, functions, aliases, etc. which will
+# be loaded before the rest of this bashrc. It can be used to configure the
+# rest of the U_* env variables to a user's liking.
+U_PRECUSTOM=${U_PRECUSTOM:-"1"}
+if [ "${U_PRECUSTOM}" == "1" ]; then
+	if [ -f ~/.bashrc.precustom ]; then
+		. ~/.bashrc.precustom
+	fi
+fi
+
+# If set to 1 load (source) ~/.bashrc.postcustom at the very end of this bashrc.
+# This can be used to tweak the config, overload settings/functions/aliases, or
+# whatever.
+U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
+
+
 # Add ${HOME}/bin and ${HOME}/.bin to your path if they exist.
 # Binaries and scripts in these folders will the be available on the command
 # line without having to type their full paths
 #
-U_BINS=1
+U_BINS=${U_BINS:-"1"}
 
 # Load ~/.bash_functions
 # .bash_functions can contain user-defined functions.
 #
 # Set to 0 to disable
 #
-U_FUNCS=1
+U_FUNCS=${U_FUNCS:-"1"}
 
 # Load ~/.bash_aliases
 # .bash_aliases can contain user-defined aliases.
 #
 # Set to 0 to disable
 #
-U_ALIASES=1
+U_ALIASES=${U_ALIASES:-"1"}
 
 # Enable lesspipe
 # This bit makes it so less can seamlessly/transparently open
@@ -53,7 +70,7 @@ U_ALIASES=1
 
 # Set up ssh and/or gpg agents (this is not complete)
 
-U_AGENTS=1
+U_AGENTS=${U_AGENTS:-"1"}
 
 # USER ENVIRONMENT
 ################################################################################
@@ -92,7 +109,6 @@ U_AGENTS=1
 	# check the window size after each command and, if necessary,
 	# update the values of LINES and COLUMNS.
 	shopt -s checkwinsize
-
 
 	#Enables advanced pathname matching
 	shopt -s extglob
@@ -137,7 +153,8 @@ fi
 #############################################################################
 
 # Define colors for usage in prompts. Note that these are escaped for usage
-# in the prompt and shouldn't be used elsewhere
+# in the prompt and shouldn't be used elsewhere. Read the bash man page to
+# see why this is necessary
 eBLACK='\[\e[0;30m\]'
 eBLUE='\[\e[0;34m\]'
 eGREEN='\[\e[0;32m\]'
@@ -292,6 +309,11 @@ if ! shopt -oq posix; then
 	fi
 fi
 
+# USER CUSTOMIZATIONS
+U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
+if [ "${U_POSTCUSTOM}" == "1" ]; then
+	if [ -f ~/.bashrc.postcustom ]; then
+		. ~/.bashrc.postcustom
+	fi
 
-
-
+fi
