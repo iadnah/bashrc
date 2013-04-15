@@ -1,4 +1,4 @@
-# bashrc 1.1.3 - 2013-04-14
+# bashrc 1.2.0 - 2013-04-14
 #  - iadnah :: iadnah.net :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
@@ -13,7 +13,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-export BASHRC_VERSION="1.1.3"
+export BASHRC_VERSION="1.2.0"
 
 
 # USER OPTIONS
@@ -26,7 +26,7 @@ export BASHRC_VERSION="1.1.3"
 # This allows users to set custom options, functions, aliases, etc. which will
 # be loaded before the rest of this bashrc. It can be used to configure the
 # rest of the U_* env variables to a user's liking.
-U_PRECUSTOM=${U_PRECUSTOM:-"1"}
+export U_PRECUSTOM=${U_PRECUSTOM:-"1"}
 if [ "${U_PRECUSTOM}" == "1" ]; then
 	if [ -f ~/.bashrc.precustom ]; then
 		. ~/.bashrc.precustom
@@ -36,28 +36,28 @@ fi
 # If set to 1 load (source) ~/.bashrc.postcustom at the very end of this bashrc.
 # This can be used to tweak the config, overload settings/functions/aliases, or
 # whatever.
-U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
+export U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
 
 
 # Add ${HOME}/bin and ${HOME}/.bin to your path if they exist.
 # Binaries and scripts in these folders will the be available on the command
 # line without having to type their full paths
 #
-U_BINS=${U_BINS:-"1"}
+export U_BINS=${U_BINS:-"1"}
 
 # Load ~/.bash_functions
 # .bash_functions can contain user-defined functions.
 #
 # Set to 0 to disable
 #
-U_FUNCS=${U_FUNCS:-"1"}
+export U_FUNCS=${U_FUNCS:-"1"}
 
 # Load ~/.bash_aliases
 # .bash_aliases can contain user-defined aliases.
 #
 # Set to 0 to disable
 #
-U_ALIASES=${U_ALIASES:-"1"}
+export U_ALIASES=${U_ALIASES:-"1"}
 
 # Enable lesspipe
 # This bit makes it so less can seamlessly/transparently open
@@ -70,7 +70,7 @@ U_ALIASES=${U_ALIASES:-"1"}
 
 # Set up ssh and/or gpg agents (this is not complete)
 
-U_AGENTS=${U_AGENTS:-"1"}
+export U_AGENTS=${U_AGENTS:-"1"}
 
 # USER ENVIRONMENT
 ################################################################################
@@ -155,42 +155,42 @@ fi
 # Define colors for usage in prompts. Note that these are escaped for usage
 # in the prompt and shouldn't be used elsewhere. Read the bash man page to
 # see why this is necessary
-eBLACK='\[\e[0;30m\]'
-eBLUE='\[\e[0;34m\]'
-eGREEN='\[\e[0;32m\]'
-eCYAN='\[\e[0;36m\]'
-eRED='\[\e[0;31m\]'
-ePURPLE='\[\e[0;35m\]'
-eBROWN='\[\e[0;33m\]'
-eLIGHTGRAY='\[\e[0;37m\]'
-eDARKGRAY='\[\e[1;30m\]'
-eLIGHTBLUE='\[\e[1;34m\]'
-eLIGHTGREEN='\[\e[1;32m\]'
-eLIGHTCYAN='\[\e[1;36m\]'
-eLIGHTRED='\[\e[1;31m\]'
-eIGHTPURPLE='\[\e[1;35m\]'
-eELLOW='\[\e[1;33m\]'
-eHITE='\[\e[1;37m\]'
-eNC='\[\e[0m\]'
+export eBLACK='\[\e[0;30m\]'
+export eBLUE='\[\e[0;34m\]'
+export eGREEN='\[\e[0;32m\]'
+export eCYAN='\[\e[0;36m\]'
+export eRED='\[\e[0;31m\]'
+export ePURPLE='\[\e[0;35m\]'
+export eBROWN='\[\e[0;33m\]'
+export eLIGHTGRAY='\[\e[0;37m\]'
+export eDARKGRAY='\[\e[1;30m\]'
+export eLIGHTBLUE='\[\e[1;34m\]'
+export eLIGHTGREEN='\[\e[1;32m\]'
+export eLIGHTCYAN='\[\e[1;36m\]'
+export eLIGHTRED='\[\e[1;31m\]'
+export eIGHTPURPLE='\[\e[1;35m\]'
+export eYELLOW='\[\e[1;33m\]'
+export eWHITE='\[\e[1;37m\]'
+export eNC='\[\e[0m\]'
 
 # Define colors for generic usage
-BLACK='\e[0;30m'
-BLUE='\e[0;34m'
-GREEN='\e[0;32m'
-CYAN='\e[0;36m'
-RED='\e[0;31m'
-PURPLE='\e[0;35m'
-BROWN='\e[0;33m'
-LIGHTGRAY='\e[0;37m'
-DARKGRAY='\e[1;30m'
-LIGHTBLUE='\e[1;34m'
-LIGHTGREEN='\e[1;32m'
-LIGHTCYAN='\e[1;36m'
-LIGHTRED='\e[1;31m'
-LIGHTPURPLE='\e[1;35m'
-YELLOW='\e[1;33m'
-WHITE='\e[1;37m'
-NC='\e[0m'
+export BLACK='\e[0;30m'
+export BLUE='\e[0;34m'
+export GREEN='\e[0;32m'
+export CYAN='\e[0;36m'
+export RED='\e[0;31m'
+export PURPLE='\e[0;35m'
+export BROWN='\e[0;33m'
+export LIGHTGRAY='\e[0;37m'
+export DARKGRAY='\e[1;30m'
+export LIGHTBLUE='\e[1;34m'
+export LIGHTGREEN='\e[1;32m'
+export LIGHTCYAN='\e[1;36m'
+export LIGHTRED='\e[1;31m'
+export LIGHTPURPLE='\e[1;35m'
+export YELLOW='\e[1;33m'
+export WHITE='\e[1;37m'
+export NC='\e[0m'
 
 FORCE_COLOR_DISABLE=${FORCE_COLOR_DISABLE:-''}
 FORCE_COLOR_PROMPT=${FORCE_COLOR_PROM:-"yes"}
@@ -232,10 +232,27 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# INTERNAL FUNCTIONS
+################################################################################
+# These are functions internal to this whole shabang
+function loadRcDir() {
+	if [ -d "$1" ]; then
+	        for rcFile in ${1}/*; do
+	                . ${rcFile}
+	                if [ $? != "0" ]; then
+	                        echo "BASHRC ERROR: '$rcFile' failed to load." 1>&2
+	                fi
+	        done
+	fi
+}
+################################################################################
+# END INTERNAL FUNCTIONS
+
+
 # PERSONAL BINARIES
 ################################################################################
 # Binaries and scripts placed in ~/bin or ~/.bin will be added to the PATH
-U_BINS=${U_BINS:-"1"}
+export U_BINS=${U_BINS:-"1"}
 if [ "${U_BINS}" == "1" ]; then
 	if [ -d "${HOME}/bin" ]; then
 		PATH="${PATH}:${HOME}/bin"
@@ -248,16 +265,27 @@ fi
 ################################################################################
 # END PERSONAL BINARIES
 
-U_AGENTS=${U_AGENTS:-"1"}
+export U_AGENTS=${U_AGENTS:-"1"}
+export U_KEYCHAIN_OPTS=${U_KEYCHAIN_OPTS:-"--inherit local -Q --eval"}
 if [ "${U_AGENTS}" == "1" ]; then
+	# Check if keychain is installed (in path). If it is, see if it has
+	# already set up our agents and try to use them. Otherwise, start it.
 	KEYCHAIN=$(which keychain)
 	if [ "$?" == "0" ]; then
-		${KEYCHAIN} --inherit local
+		[ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
+		if [ -f ${HOME}/.keychain/${HOSTNAME}-sh ]; then
+			. ${HOME}/.keychain/${HOSTNAME}-sh
+			if [ -z "$SSH_AGENT_PID" ] || [ ! -d "/proc/$SSH_AGENT_PID" ]; then
+				eval `${KEYCHAIN} ${U_KEYCHAIN_OPTS}`
+			fi
+		fi
+
+		eval `${KEYCHAIN} ${U_KEYCHAIN_OPTS}`
 	fi
 fi
 
 
-U_ALIASES=${U_ALIASES:-"1"}
+export U_ALIASES=${U_ALIASES:-"1"}
 #BREAK:aliases
 # only load this section and user-defined aliases if 
 # envvar U_ALIASES == "0"
@@ -284,7 +312,7 @@ fi
 
 
 #BREAK:functions
-U_FUNCS=${U_FUNCS:-"1"}
+export U_FUNCS=${U_FUNCS:-"1"}
 if [ "${U_FUNCS}" == "1" ]; then
 
 	# CUSTOM FUNCTIONS
@@ -310,7 +338,7 @@ if ! shopt -oq posix; then
 fi
 
 # USER CUSTOMIZATIONS
-U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
+export U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
 if [ "${U_POSTCUSTOM}" == "1" ]; then
 	if [ -f ~/.bashrc.postcustom ]; then
 		. ~/.bashrc.postcustom

@@ -8,7 +8,4 @@ spin ()
 }
 
 
-if [ -d "${HOME}/.bash_functions.d" ]; then
-	. ${HOME}/.bash_functions.d/*
-fi
-
+loadRcDir ${HOME}/.bash_functions.d
