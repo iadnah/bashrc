@@ -1,5 +1,5 @@
-# bashrc 1.2.0 - 2013-04-14
-#  - iadnah :: iadnah.net :: gitbrew.org
+# bashrc 1.2.1 - 2013-05-07
+#  - iadnah :: iadnah.uplinklounge.com :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
 # a little less teadious. 
@@ -18,7 +18,7 @@
 declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1
 BASHRC_VERSIONINFO[1]=2
-BASHRC_VERSIONINFO[2]=0
+BASHRC_VERSIONINFO[2]=1
 BASHRC_VERSIONINFO[3]=0
 BASHRC_VERSIONINFO[4]="beta"
 
