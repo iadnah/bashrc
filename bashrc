@@ -9,12 +9,20 @@
 # for examples
 ################################################################################
 
+#ENABLE DEBUG/TRACING (FOR DEVELOPERS)
+#set -x
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-export BASHRC_VERSION="1.2.0"
+declare -a BASHRC_VERSIONINFO
+BASHRC_VERSIONINFO[0]=1
+BASHRC_VERSIONINFO[1]=2
+BASHRC_VERSIONINFO[2]=0
+BASHRC_VERSIONINFO[3]=0
+BASHRC_VERSIONINFO[4]="beta"
 
+export BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.${BASHRC_VERSIONINFO[1]}.${BASHRC_VERSIONINFO[2]}"
 
 # USER OPTIONS
 ################################################################################
@@ -239,12 +247,14 @@ function loadRcDir() {
 	if [ -d "$1" ]; then
 	        for rcFile in ${1}/*; do
 	                . ${rcFile}
-	                if [ $? != "0" ]; then
-	                        echo "BASHRC ERROR: '$rcFile' failed to load." 1>&2
-	                fi
+			local ret=$?
+	                #if [ $ret != "0" ]; then
+	                #        echo "BASHRC ERROR: '$rcFile' failed to load. The last function called within returned $ret, expected 0." 1>&2
+	                #fi
 	        done
 	fi
 }
+
 ################################################################################
 # END INTERNAL FUNCTIONS
 
