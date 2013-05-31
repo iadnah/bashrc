@@ -1,5 +1,9 @@
 # nmap bash completion file
-# by Daniel Miller 
+# by Daniel Miller
+##
+# Extended by durandal and iadnah
+# Last Edit: 05/31/2013
+##
 _escape_compreply() {
     local IFS=$'\n'
     local i=0
@@ -56,7 +60,7 @@ _nmap() {
 -T[TIMING] (Timing templates)
 -v (Be verbose)
 --version (Show version and exit)"
-    ping_types="-Pn (skip host discovery)
+    ping_types="-PN (skip host discovery)
 -PS[portlist] (TCP SYN)
 -PA[portlist] (TCP ACK)
 -PU[portlist] (UDP)
