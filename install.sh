@@ -7,7 +7,7 @@ for old in .bashrc .bash_aliases .bash_completion .bash_functions; do
 	fi
 done
 
-for new in bashrc bash_aliases bash_functions bash_completion; do
+for new in bashrc bash_aliases bash_functions bash_completion bash_modules; do
 	if [ -f "./${new}" ]; then
 		echo "Installing ${new}"
 		cp -v "./${new}" "${HOME}/.${new}" 2>/dev/null | awk '{print "\t" $0}'
@@ -49,7 +49,7 @@ for new in bashrc.precustom bashrc.postcustom; do
 	fi
 done
 
-for newd in bash_aliases bash_functions bash_completion; do
+for newd in bash_aliases bash_functions bash_completion bash_modules; do
 	if [ ! -d "${HOME}/.${newd}.d}" ]; then
 		echo "Creating ${HOME}/.${newd}.d:"
 

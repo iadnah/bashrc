@@ -1,0 +1,15 @@
+# bashrc module loaded
+#
+
+echo "Module subsystem loaded" 1>&2
+
+function bashrcLoadModule() {
+	local module=$1
+
+	if [ -x "$HOME/.bash_modules.d/$module" ]; then
+		echo "Loading module $module"
+	else
+		echo "Unable to load module"
+	fi
+
+}
