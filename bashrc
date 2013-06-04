@@ -1,4 +1,4 @@
-# bashrc 1.2.3 - 2013-06-04
+# bashrc 1.2.4-p1 - 2013-06-04
 #  - iadnah :: iadnah.uplinklounge.com :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
@@ -21,8 +21,8 @@ fi
 declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1		#Major version
 BASHRC_VERSIONINFO[1]=2		#Minor version
-BASHRC_VERSIONINFO[2]=3		#Micro version
-BASHRC_VERSIONINFO[3]=0
+BASHRC_VERSIONINFO[2]=4		#Micro version
+BASHRC_VERSIONINFO[3]=1		#Patch ID
 BASHRC_VERSIONINFO[4]="beta"	#Release type
 
 export BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.${BASHRC_VERSIONINFO[1]}.${BASHRC_VERSIONINFO[2]}"
@@ -32,6 +32,9 @@ export BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.${BASHRC_VERSIONINFO[1]}.${BASHR
 # Edit these variables to easily change the behavior of this script. Commented
 # variables are the default settings.
 ################################################################################
+
+# Sets the default title for the terminal window
+export U_DEFAULT_TITLE=${U_DEFAULT_TITLE:-"$BASH"}
 
 # If U_PRECUSTOM is set to 1, the load ~/.bashrc.precustom before proceeding.
 # This allows users to set custom options, functions, aliases, etc. which will
@@ -48,7 +51,6 @@ fi
 # This can be used to tweak the config, overload settings/functions/aliases, or
 # whatever.
 export U_POSTCUSTOM=${U_POSTCUSTOM:-"1"}
-
 
 # Add ${HOME}/bin and ${HOME}/.bin to your path if they exist.
 # Binaries and scripts in these folders will the be available on the command
@@ -260,7 +262,11 @@ function loadRcDir() {
 
 # Sets the terminal title
 function SetTitle() {
-	PROMPT_COMMAND="echo -ne \"\033]0;$@ (on $HOSTNAME)\007\""
+	unset PROMPT_COMMAND
+	PROMPT_COMMAND="echo -ne \"\033]0;$@ ($USER@$HOSTNAME)\007\";\
+		echo -ne \"\033]1;$@ ($USER@$HOSTNAME)\007\";\
+		unset PROMPT_COMMAND"
+
 }
 
 ################################################################################
@@ -359,7 +365,7 @@ fi
 export U_UPDATETITLE=${U_UPDATETITLE:-"1"}
 if [ "${U_UPDATETITLE}" == "1" ]; then
 	set -o functrace
-	trap 'SetTitle $BASH_COMMAND' DEBUG
+	trap 'SetTitle "$BASH_COMMAND"' DEBUG
 fi
 
 # USER CUSTOMIZATIONS
@@ -370,3 +376,5 @@ if [ "${U_POSTCUSTOM}" == "1" ]; then
 	fi
 
 fi
+
+SetTitle $U_DEFAULT_TITLE

@@ -8,6 +8,9 @@
 # Read the source to see exactly what these do. Most of these are BOOLEAN, 0 or 1
 #
 
+# Sets the default title for the terminal window
+#export U_DEFAULT_TITLE="$BASH"
+
 # Turn this on to enable tracing/debugging (this is for devs)
 #export U_DEBUG=0
 
