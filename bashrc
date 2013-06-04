@@ -1,4 +1,4 @@
-# bashrc 1.2.1 - 2013-05-07
+# bashrc 1.2.2 - 2013-06-04
 #  - iadnah :: iadnah.uplinklounge.com :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
@@ -253,6 +253,11 @@ function loadRcDir() {
 	                #fi
 	        done
 	fi
+}
+
+# Sets the terminal title
+function SetTitle() {
+	PROMPT_COMMAND="echo -ne \"\033]0;$@ (on $HOSTNAME)\007\""
 }
 
 ################################################################################
