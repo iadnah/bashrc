@@ -1,4 +1,4 @@
-# bashrc 1.2.2 - 2013-06-04
+# bashrc 1.2.3 - 2013-06-04
 #  - iadnah :: iadnah.uplinklounge.com :: gitbrew.org
 #
 # This bashrc is one I made to make some of the work I do
@@ -9,18 +9,21 @@
 # for examples
 ################################################################################
 
-#ENABLE DEBUG/TRACING (FOR DEVELOPERS)
-#set -x
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+#ENABLE DEBUG/TRACING (FOR DEVELOPERS)
+export U_DEBUG=${U_DEBUG:-"0"}
+if [ "$U_DEBUG" == "1" ]; then
+	set -x
+fi
+
 declare -a BASHRC_VERSIONINFO
-BASHRC_VERSIONINFO[0]=1
-BASHRC_VERSIONINFO[1]=2
-BASHRC_VERSIONINFO[2]=1
+BASHRC_VERSIONINFO[0]=1		#Major version
+BASHRC_VERSIONINFO[1]=2		#Minor version
+BASHRC_VERSIONINFO[2]=3		#Micro version
 BASHRC_VERSIONINFO[3]=0
-BASHRC_VERSIONINFO[4]="beta"
+BASHRC_VERSIONINFO[4]="beta"	#Release type
 
 export BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.${BASHRC_VERSIONINFO[1]}.${BASHRC_VERSIONINFO[2]}"
 
@@ -350,6 +353,13 @@ if ! shopt -oq posix; then
 	if [ -f ~/.bash_completion ]; then
 		. ~/.bash_completion
 	fi
+fi
+
+# Set terminal title to the running command
+export U_UPDATETITLE=${U_UPDATETITLE:-"1"}
+if [ "${U_UPDATETITLE}" == "1" ]; then
+	set -o functrace
+	trap 'SetTitle $BASH_COMMAND' DEBUG
 fi
 
 # USER CUSTOMIZATIONS
