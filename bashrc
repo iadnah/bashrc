@@ -86,7 +86,7 @@ export U_ALIASES=${U_ALIASES:-"1"}
 export U_AGENTS=${U_AGENTS:-"1"}
 
 # Enable support for modules
-export U_MODULES_ENABLE=${U_MODULES_ENABLE:-"1"}
+export U_MODULES_ENABLE=${U_MODULES_ENABLE:-"0"}
 
 # USER ENVIRONMENT
 ################################################################################
