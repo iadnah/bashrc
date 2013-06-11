@@ -9,7 +9,8 @@ Modules use regular bash syntax, but must meet certain requirements:
  
  * Modules must end in .module
  * Modules must be include a header like the one below:
-```bash
+
+```
 #!/bin/bash
 ### BEGIN MODULE INFO
 # Name:			shell_security
