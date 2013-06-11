@@ -25,6 +25,7 @@ BASHRC_VERSIONINFO[2]=4		#Micro version
 BASHRC_VERSIONINFO[3]=1		#Patch ID
 BASHRC_VERSIONINFO[4]="beta"	#Release type
 
+export BASHRC_VERSIONINFO
 export BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.${BASHRC_VERSIONINFO[1]}.${BASHRC_VERSIONINFO[2]}"
 
 # USER OPTIONS
@@ -82,8 +83,10 @@ export U_ALIASES=${U_ALIASES:-"1"}
 #ENABLE_LESSPIPE=0
 
 # Set up ssh and/or gpg agents (this is not complete)
-
 export U_AGENTS=${U_AGENTS:-"1"}
+
+# Enable support for modules
+export U_MODULES_ENABLE=${U_MODULES_ENABLE:-"1"}
 
 # USER ENVIRONMENT
 ################################################################################
@@ -269,6 +272,16 @@ function SetTitle() {
 
 }
 
+# Helper function to output messages to stderr
+function ErrorMsg() {
+	echo $@ 1>&2
+}
+
+# Reload bash
+function rebash() {
+	. ~/.bashrc
+}
+
 ################################################################################
 # END INTERNAL FUNCTIONS
 
@@ -366,6 +379,14 @@ export U_UPDATETITLE=${U_UPDATETITLE:-"1"}
 if [ "${U_UPDATETITLE}" == "1" ]; then
 	set -o functrace
 	trap 'SetTitle "$BASH_COMMAND"' DEBUG
+fi
+
+ErrorMsg -ne "Module support: \t"
+if [ "${U_MODULES_ENABLE}" == "1" ]; then
+	ErrorMsg " enabled"
+        source ~/.bash_modules
+else
+	ErrorMsg " disabled"
 fi
 
 # USER CUSTOMIZATIONS

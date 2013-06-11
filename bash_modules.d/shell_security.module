@@ -1,15 +1,3 @@
-## Modules Subsystem
-The modules subsystem is designed to provide modules which can be dynamically loaded
-to alter the bash environment based on the task at hand. For example, a module could
-be created that alters the prompt, aliases, etc. for working with 
-
-
-### Module Format / Requirements
-Modules use regular bash syntax, but must meet certain requirements:
- 
- * Modules must end in .module
- * Modules must be include a header like the one below:
-```bash
 #!/bin/bash
 ### BEGIN MODULE INFO
 # Name:			shell_security
@@ -27,5 +15,3 @@ Modules use regular bash syntax, but must meet certain requirements:
 # Requires:
 # Conflicts:
 ### END MODULE INFO
-```
-

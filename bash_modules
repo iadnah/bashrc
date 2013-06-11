@@ -1,15 +1,48 @@
 # bashrc module loaded
 #
 
-echo "Module subsystem loaded" 1>&2
+export U_MODULES_PATH=${U_MODULES_PATH:-"$HOME/.bash_modules.d"}
 
-function bashrcLoadModule() {
+function bash_module() {
+	# We have to turn this off otherwise SetTitle gets drunk
+	set +o functrace
+
 	local module=$1
 
-	if [ -x "$HOME/.bash_modules.d/$module" ]; then
-		echo "Loading module $module"
+	if [ -x "$U_MODULES_PATH/$module" ]; then
+		ErrorMsg "Loading module $module"
+		source "$HOME/.bash_modules.d/$module"
 	else
-		echo "Unable to load module"
+		ErrorMsg "Unable to load module $module"
 	fi
+	set -o functrace
+}
 
+function bash_list_modules() {
+	ErrorMsg "Not implimented yet"
+	return `false`
+	declare -a mods_enabled
+	declare -a mods_disabled
+	declare -a mods_available
+
+	local mec=0
+	local mdc=0
+	local mac=0
+	
+
+	for mod_file in $U_MODULES_PATH/*; do
+		local mod_name=`basename "$mod_file"`
+		if [ -x $mod_file ]; then
+			mods_enabled[$mec]="$mod_name"
+			mec=$(($mec + 1))
+		elif [ ! -d $mod_file ] && [ "$mod_name" != "README.md" ]; then
+			mods_available[$mac]="$mod_name"
+			mac=$(($mac + 1))
+		else
+			continue
+		fi
+	done
+
+	#echo "$mec modules enabled, $mac other modules available"
+	echo "Modules enabled (${#mods_enabled[*]}):"
 }
