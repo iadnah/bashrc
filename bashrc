@@ -1,12 +1,26 @@
-# bashrc 1.2.4-p1 - 2013-06-04
-#  - iadnah :: iadnah.uplinklounge.com :: gitbrew.org
+# bashrc 1.2.4-p2 - 2013-06-11
 #
-# This bashrc is one I made to make some of the work I do
-# a little less teadious. 
+# This is a full-featured and modular bashrc file for usage with the bash
+# shell.
 #
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# COPYRIGHT
+###########
+# bashrc is Copyright (c) Jason Thistlethwaite 2013 (iadnah@uplinklounge.com)
+#
+#    bashrc is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    bashrc is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with bashrc.  If not, see <http://www.gnu.org/licenses/>.
+#
+##########
 ################################################################################
 
 # If not running interactively, don't do anything
@@ -22,7 +36,7 @@ declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1		#Major version
 BASHRC_VERSIONINFO[1]=2		#Minor version
 BASHRC_VERSIONINFO[2]=4		#Micro version
-BASHRC_VERSIONINFO[3]=1		#Patch ID
+BASHRC_VERSIONINFO[3]=2		#Patch ID
 BASHRC_VERSIONINFO[4]="beta"	#Release type
 
 export BASHRC_VERSIONINFO
