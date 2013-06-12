@@ -1,0 +1,6 @@
+The easiest way to install bashrc is to run the install.sh script, which will
+copy all of the relevant files to the proper locations in your home directory.
+Any pre-existing files will be backed up.
+
+There are plans to totally redo this so updates are handled a little more
+intelligently.
