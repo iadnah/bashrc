@@ -278,6 +278,7 @@ function loadRcDir() {
 }
 
 # Sets the terminal title
+# TODO: Update SetTitle so it doesn't output anything if the terminal won't handle it intelligently
 function SetTitle() {
 	unset PROMPT_COMMAND
 	PROMPT_COMMAND="echo -ne \"\033]0;$@ ($USER@$HOSTNAME)\007\";\
