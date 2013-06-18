@@ -94,7 +94,7 @@ export U_ALIASES=${U_ALIASES:-"1"}
 # This is already configured on Gentoo and some other distros. Set this to 1
 # if your distro is not one of these
 #
-#ENABLE_LESSPIPE=0
+export ENABLE_LESSPIPE=${ENABLE_LESSPIPE:-"1"}
 
 # Set up ssh and/or gpg agents (this is not complete)
 export U_AGENTS=${U_AGENTS:-"1"}
@@ -161,7 +161,6 @@ export U_MODULES_ENABLE=${U_MODULES_ENABLE:-"0"}
 # you think you need it.
 #
 # make less more friendly for non-text input files, see lesspipe(1)
-ENABLE_LESSPIPE=${ENABLE_LESSPIPE:-"0"}
 if [ "$ENABLE_LESSPIPE" == "1" ]; then
 	[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 fi
