@@ -1,4 +1,4 @@
-# bashrc 1.2.4-p2 - 2013-06-11
+# bashrc 1.2.4-p4 - 2013-06-18
 #
 # This is a full-featured and modular bashrc file for usage with the bash
 # shell.
@@ -36,7 +36,7 @@ declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1		#Major version
 BASHRC_VERSIONINFO[1]=2		#Minor version
 BASHRC_VERSIONINFO[2]=4		#Micro version
-BASHRC_VERSIONINFO[3]=2		#Patch ID
+BASHRC_VERSIONINFO[3]=4		#Patch ID
 BASHRC_VERSIONINFO[4]="beta"	#Release type
 
 export BASHRC_VERSIONINFO
