@@ -322,7 +322,7 @@ export U_KEYCHAIN_OPTS=${U_KEYCHAIN_OPTS:-"--inherit local -Q --eval"}
 if [ "${U_AGENTS}" == "1" ]; then
 	# Check if keychain is installed (in path). If it is, see if it has
 	# already set up our agents and try to use them. Otherwise, start it.
-	KEYCHAIN=$(which keychain)
+	KEYCHAIN=$(which keychain 2>/dev/null)
 	if [ "$?" == "0" ]; then
 		[ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
 		if [ -f ${HOME}/.keychain/${HOSTNAME}-sh ]; then
