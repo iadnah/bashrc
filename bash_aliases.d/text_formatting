@@ -1,0 +1,6 @@
+# Aliases that provide helpers for editing and formatting text on the command line
+# (c) Copyright 2013 Jason Thistlethwaite
+
+# Take CSV formatted input and display it in human readable form. Useful when piped
+# through 'column -t'
+alias dcsv='sed -e "s/,/ /g" -e "s/\"//g"'
