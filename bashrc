@@ -36,7 +36,7 @@ declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1		#Major version
 BASHRC_VERSIONINFO[1]=2		#Minor version
 BASHRC_VERSIONINFO[2]=4		#Micro version
-BASHRC_VERSIONINFO[3]=6		#Patch ID
+BASHRC_VERSIONINFO[3]=9		#Patch ID
 BASHRC_VERSIONINFO[4]="beta"	#Release type
 
 export BASHRC_VERSIONINFO
@@ -288,8 +288,8 @@ function loadRcDir() {
 # TODO: Update SetTitle so it doesn't output anything if the terminal won't handle it intelligently
 function SetTitle() {
 	unset PROMPT_COMMAND
-	PROMPT_COMMAND="echo -ne \"\033]0;$@ ($USER@$HOSTNAME)\007\";\
-		echo -ne \"\033]1;$@ ($USER@$HOSTNAME)\007\";\
+	PROMPT_COMMAND="echo -ne \"\033]0;\"$@\" ($USER@$HOSTNAME)\007\";\
+		echo -ne \"\033]1;\"$@\" ($USER@$HOSTNAME)\007\";\
 		unset PROMPT_COMMAND"
 
 }
