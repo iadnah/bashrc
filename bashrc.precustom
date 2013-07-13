@@ -1,5 +1,5 @@
 # ~/bashrc.precustom
-# Last Edit: 06/11/2013
+# Last Edit: 07/13/2013
 # This file is loaded early in bashrc and can be used to configure the behavior
 # of bashrc
 
@@ -32,6 +32,10 @@
 
 # If enabled the title of your terminal will automatically be set to the running command
 #export U_UPDATETITLE=1
+
+# Whether or not enable lesspipe. This enables the 'less' command to read some non-text
+# files.
+#export ENABLE_LESSPIPE=1
 
 # If enabled the (experimental) modules system will be enabled. It is disabled by
 # by default in the master branch.

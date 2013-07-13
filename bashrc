@@ -1,4 +1,4 @@
-# bashrc 1.2.4-p6 - 2013-06-18
+# bashrc 1.2.5-p0 - 2013-07-13
 #
 # This is a full-featured and modular bashrc file for usage with the bash
 # shell.
@@ -35,12 +35,17 @@ fi
 declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1		#Major version
 BASHRC_VERSIONINFO[1]=2		#Minor version
-BASHRC_VERSIONINFO[2]=4		#Micro version
-BASHRC_VERSIONINFO[3]=9		#Patch ID
+BASHRC_VERSIONINFO[2]=5		#Micro version
+BASHRC_VERSIONINFO[3]=0		#Patch ID
 BASHRC_VERSIONINFO[4]="beta"	#Release type
 
 export BASHRC_VERSIONINFO
-export BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.${BASHRC_VERSIONINFO[1]}.${BASHRC_VERSIONINFO[2]}"
+BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.\
+${BASHRC_VERSIONINFO[1]}.\
+${BASHRC_VERSIONINFO[2]}-p\
+${BASHRC_VERSIONINFO[3]} \
+(${BASHRC_VERSIONINFO[4]})"
+export BASHRC_VERSION
 
 # USER OPTIONS
 ################################################################################
@@ -155,15 +160,18 @@ export U_MODULES_ENABLE=${U_MODULES_ENABLE:-"0"}
 # LESSPIPE - Open non-text input files with less
 ########################################################################
 # This bit makes it so less can seamlessly/transparently open
-# compressed documents and (possibly) other file types
+# compressed documents and (possibly) other file types, Read lesspipe(1)
+# for more info.
 #
-# This is default on Gentoo and some other distros. Uncomment this if
-# you think you need it.
-#
-# make less more friendly for non-text input files, see lesspipe(1)
-if [ "$ENABLE_LESSPIPE" == "1" ]; then
-	[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+if [ "${ENABLE_LESSPIPE}" == "1" ]; then
+        lesspipe=`which lesspipe`
+        if [ -x "${lesspipe}" ]; then
+                export LESSOPEN="| /usr/bin/lesspipe %s";
+                export LESSCLOSE="/usr/bin/lesspipe %s %s";
+        fi
+	unset lesspipe
 fi
+
 
 # COLORS
 ############################################################################
@@ -181,6 +189,8 @@ fi
 #
 #############################################################################
 
+
+## COLOR DEFINITIONS
 # Define colors for usage in prompts. Note that these are escaped for usage
 # in the prompt and shouldn't be used elsewhere. Read the bash man page to
 # see why this is necessary
@@ -220,6 +230,7 @@ export LIGHTPURPLE='\e[1;35m'
 export YELLOW='\e[1;33m'
 export WHITE='\e[1;37m'
 export NC='\e[0m'
+## END COLOR DEFINITIONS
 
 FORCE_COLOR_DISABLE=${FORCE_COLOR_DISABLE:-''}
 FORCE_COLOR_PROMPT=${FORCE_COLOR_PROM:-"yes"}
@@ -271,7 +282,13 @@ fi
 
 # INTERNAL FUNCTIONS
 ################################################################################
-# These are functions internal to this whole shabang
+# These are helper functions used internally by bashrc. 
+#
+# These are (by default) exported to the shell environment and can be used by
+# other scripts.
+
+# Include (source) all files in a directory
+# Usage: loadRcDir <directory>
 function loadRcDir() {
 	if [ -d "$1" ]; then
 	        for rcFile in ${1}/*; do
@@ -286,6 +303,7 @@ function loadRcDir() {
 
 # Sets the terminal title
 # TODO: Update SetTitle so it doesn't output anything if the terminal won't handle it intelligently
+# TODO: Fix this to escape command names before output to prevent possible unintended command execution
 function SetTitle() {
 	unset PROMPT_COMMAND
 	PROMPT_COMMAND="echo -ne \"\033]0;\"$@\" ($USER@$HOSTNAME)\007\";\
@@ -293,11 +311,36 @@ function SetTitle() {
 		unset PROMPT_COMMAND"
 
 }
+## OUTPUT FUNCTIONS
+################################################################################
+# Helper functions for writing different kinds of messages to the user.
 
 # Helper function to output messages to stderr
+# Takes all arguments passed and passes them directly to echo, redirecting the
+# output to STDERR.
 function ErrorMsg() {
 	echo $@ 1>&2
 }
+
+# Helper function to give informative messages to the user
+# These are more-or-less based on the similar functions used in Gentoo's
+# init scripts and portage.
+
+# Print an informative message to the user on STDERR
+function emsg() {
+	echo -e " ${LIGHTGREEN}*$NC $@" 1>&2
+}
+
+# Print a warning message to the user on STDERR
+function ewarn() {
+	echo -e " ${LIGHTYELLOW}*$NC $@" 1>&2
+}
+
+# Print an error message to the user on STDERR
+function eerror() {
+	echo -e " ${LIGHTRED}*$NC $@" 1>&2
+}
+## END OUTPUT FUNCTIONS
 
 # Reload bash
 function rebash() {
@@ -420,4 +463,5 @@ if [ "${U_POSTCUSTOM}" == "1" ]; then
 
 fi
 
+emsg "Loaded bashrc $BASHRC_VERSION"
 SetTitle $U_DEFAULT_TITLE
