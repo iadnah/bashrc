@@ -36,8 +36,8 @@ declare -a BASHRC_VERSIONINFO
 BASHRC_VERSIONINFO[0]=1		#Major version
 BASHRC_VERSIONINFO[1]=2		#Minor version
 BASHRC_VERSIONINFO[2]=5		#Micro version
-BASHRC_VERSIONINFO[3]=0		#Patch ID
-BASHRC_VERSIONINFO[4]="beta"	#Release type
+BASHRC_VERSIONINFO[3]=2		#Patch ID
+BASHRC_VERSIONINFO[4]="stable"	#Release type
 
 export BASHRC_VERSIONINFO
 BASHRC_VERSION="${BASHRC_VERSIONINFO[0]}.\
@@ -301,16 +301,56 @@ function loadRcDir() {
 	fi
 }
 
-# Sets the terminal title
-# TODO: Update SetTitle so it doesn't output anything if the terminal won't handle it intelligently
-# TODO: Fix this to escape command names before output to prevent possible unintended command execution
-function SetTitle() {
-	unset PROMPT_COMMAND
-	PROMPT_COMMAND="echo -ne \"\033]0;\"$@\" ($USER@$HOSTNAME)\007\";\
-		echo -ne \"\033]1;\"$@\" ($USER@$HOSTNAME)\007\";\
-		unset PROMPT_COMMAND"
+lastcmd() { 
+	LASTCMD=$(history 1 | cut -c8-); 
+	echo -ne "\e]2;$LASTCMD\a\e]1;$LASTCMD\a"; 
+
+	branch=$(getGitBranch)
+
+	export PS1="\n[${eLIGHTGREEN}\t${eNC}] :: [${eLIGHTBLUE}\w${eNC}] $branch\n${eLIGHTGREEN}\u${eWHITE}@${eLIGHTGREEN}\h${eWHITE} >${eNC} "
+}
+
+# Returns the checked out branch of a git repository you are inside of
+# Doesn't do anything if git is not installed
+function getGitBranch() {
+
+	if hash git 2>/dev/null; then
+		gitBranch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+	else
+		gitBranch=''
+	fi
+
+	gitBranch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+
+	if [ $(echo ${#gitBranch} ) -gt 0 ]; then
+
+		branch="$gitBranch"
+	else
+		branch='';
+	fi
+
+	echo $branch
 
 }
+
+PROMPT_COMMAND=lastcmd
+
+
+# Sets the terminal title
+#
+# -- This functionality has been removed because it can cause command line redirects
+#    to write files (>, |, etc) can cause the command and part of the prompt to be written
+#     to disk
+#  
+# TODO: Update SetTitle so it doesn't output anything if the terminal won't handle it intelligently
+# TODO: Fix this to escape command names before output to prevent possible unintended command execution
+# function SetTitle() {
+# 	unset PROMPT_COMMAND
+# 	PROMPT_COMMAND="echo -ne \"\033]0;\"$@\" ($USER@$HOSTNAME)\007\";\
+# 		echo -ne \"\033]1;\"$@\" ($USER@$HOSTNAME)\007\";\
+# 		unset PROMPT_COMMAND"
+
+# }
 ## OUTPUT FUNCTIONS
 ################################################################################
 # Helper functions for writing different kinds of messages to the user.
@@ -440,11 +480,11 @@ if ! shopt -oq posix; then
 fi
 
 # Set terminal title to the running command
-export U_UPDATETITLE=${U_UPDATETITLE:-"1"}
-if [ "${U_UPDATETITLE}" == "1" ]; then
-	set -o functrace
-	trap 'SetTitle "$BASH_COMMAND"' DEBUG
-fi
+#export U_UPDATETITLE=${U_UPDATETITLE:-"1"}
+#if [ "${U_UPDATETITLE}" == "1" ]; then
+#	set -o functrace
+#	trap 'SetTitle "$BASH_COMMAND"' DEBUG
+#fi
 
 ErrorMsg -ne "Module support: \t"
 if [ "${U_MODULES_ENABLE}" == "1" ]; then
@@ -463,5 +503,7 @@ if [ "${U_POSTCUSTOM}" == "1" ]; then
 
 fi
 
+
 emsg "Loaded bashrc $BASHRC_VERSION"
-SetTitle $U_DEFAULT_TITLE
+#SetTitle $U_DEFAULT_TITLE
+
