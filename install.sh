@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# all I see turns to brown; as the sun turns to brown
 for old in .bashrc .bash_aliases .bash_completion .bash_functions; do
 	if [ -f "${HOME}/${old}" ]; then
 		echo "Found existing ${old}, backing up to ${old}.bak"
